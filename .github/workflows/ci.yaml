@@ -24,3 +24,16 @@ jobs:
         run: docker build -t 444206648334.dkr.ecr.us-east-1.amazonaws.com/catalogue .
       - name: Docker Push
         run: docker push 444206648334.dkr.ecr.us-east-1.amazonaws.com/catalogue
+
+  dev-deploy:
+    needs: docker
+    runs-on: self-hosted
+    environment: dev
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ckolli66/roboshop-helm-v1
+      - name: Get kubectl config
+        run: aws eks update-kubeconfig --name dev
+      - name: Helm deploy app
+        run: helm upgrade -i catalogue . -f microservice-specific-valueFiles/catalogue.yml
