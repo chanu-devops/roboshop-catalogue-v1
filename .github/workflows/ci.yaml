@@ -36,4 +36,4 @@ jobs:
       - name: Get kubectl config
         run: aws eks update-kubeconfig --name dev
       - name: Helm deploy app
-        run: helm upgrade -i catalogue . -f microservice-specific-valueFiles/catalogue.yml
+        run: helm upgrade -i catalogue . -f microservice-specific-valuesFiles/catalogue.yml
